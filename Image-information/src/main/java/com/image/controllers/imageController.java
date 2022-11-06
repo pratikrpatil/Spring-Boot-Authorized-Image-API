@@ -1,6 +1,7 @@
 package com.image.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.image.services.imageService;
 
+import kong.unirest.JsonNode;
+
 @RestController()
 @RequestMapping("/image")
 public class imageController {
@@ -20,24 +23,35 @@ public class imageController {
 	private imageService imageService;
 	
 	@GetMapping("/view")
-	public String viewImage(@RequestParam("imageId") String imageId)
+	public ResponseEntity<?> viewImage(@RequestParam("imageId") String imageId)
 	{
-		imageService.viewImage(imageId);
-		return "Get image view is successfull.";
+		JsonNode response = imageService.viewImage(imageId);
+		
+		if(response == null)
+		{
+			new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload")
-	public String uploadNewImage(@RequestParam("image") MultipartFile image)
+	public ResponseEntity<?> uploadNewImage(@RequestParam("image") MultipartFile image)
 	{
-		imageService.uploadImage(image);
-		return "file uploaded";
+		JsonNode uploadImage = imageService.uploadImage(image);
+		return new ResponseEntity<>(uploadImage, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete")
-	public String deleteImage(@RequestParam("imageId") String imageId)
+	public ResponseEntity<?> deleteImage(@RequestParam("imageId") String imageId)
 	{
-		imageService.deleteImage(imageId);
-		return "file deleted successfully";
+		JsonNode response = imageService.deleteImage(imageId);
+		
+		if(response == null)
+		{
+			new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 }

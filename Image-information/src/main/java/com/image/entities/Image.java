@@ -16,10 +16,8 @@ public class Image {
 	
 	@Id
 	private String id;
-	
-	@ManyToOne
-	@JsonIgnore
-	private User userId;
+
+	private String userId;
 
 	public String getId() {
 		return id;
@@ -29,11 +27,11 @@ public class Image {
 		this.id = id;
 	}
 
-	public User getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(User userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	

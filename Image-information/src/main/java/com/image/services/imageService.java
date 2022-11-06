@@ -2,12 +2,14 @@ package com.image.services;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kong.unirest.JsonNode;
+
 public interface imageService {
 	
-	void uploadImage(MultipartFile file);
+	JsonNode uploadImage(MultipartFile file);
 	
-	void viewImage(String imageId);
+	JsonNode viewImage(String imageId);
 	
-	void deleteImage(String imageId);
+	JsonNode deleteImage(String imageId);
 
 }
