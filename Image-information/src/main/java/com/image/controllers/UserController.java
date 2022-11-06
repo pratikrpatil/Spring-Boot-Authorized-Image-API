@@ -1,6 +1,8 @@
 package com.image.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +18,10 @@ public class UserController {
 	private UserServiceImplementation usi;
 	
 	@PostMapping("/register/user")
-	public String registerUser(@RequestBody User user)
+	public ResponseEntity<?> registerUser(@RequestBody User user)
 	{
-		usi.registerNewUser(user);
-		return null;
+		User registerNewUser = usi.registerNewUser(user);
+		return new ResponseEntity<>(registerNewUser, HttpStatus.CREATED);
 	}
 
 }

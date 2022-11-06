@@ -16,12 +16,14 @@ public class UserServiceImplementation {
 	@Autowired
 	private PasswordEncoder passEn;
 
-	public void registerNewUser(User user) {
+	public User registerNewUser(User user) {
 		
 		String encode = passEn.encode(user.getPassword());
 		user.setPassword(encode);
 		user.setAuthority("USER");
-		userRepo.save(user);
+		User returnedUser = userRepo.save(user);
+		
+		return returnedUser;
 	}
 
 }
