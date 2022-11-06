@@ -21,7 +21,7 @@ public class UserController {
 	public ResponseEntity<?> registerUser(@RequestBody User user)
 	{
 		User registerNewUser = usi.registerNewUser(user);
-		return new ResponseEntity<>(registerNewUser, HttpStatus.CREATED);
+		return new ResponseEntity<>("User Created.", HttpStatus.CREATED);
 	}
 
 }

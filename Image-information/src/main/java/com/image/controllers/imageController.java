@@ -29,7 +29,7 @@ public class imageController {
 		
 		if(response == null)
 		{
-			new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>("Image-link : "+response, HttpStatus.OK);
 	}
@@ -48,7 +48,7 @@ public class imageController {
 		
 		if(response == null)
 		{
-			new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 		}
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);

@@ -61,7 +61,7 @@ public class imageServiceImplementation implements imageService {
 		
 		imageRepo.save(image);
 		System.out.println(asJson.getBody());
-		return "uploaded";
+		return "Image uploaded successfully with image id : "+asJson.getBody().getObject().getJSONObject("data").getString("id");
 		
 	}
 
@@ -72,17 +72,16 @@ public class imageServiceImplementation implements imageService {
 									.header("Authorization", "Bearer b736efc8d81f8e284fbc2530a35c9ba3d95bd2e2")
 									.asJson();
 		
-		if(response == null)
-		{
-			return null;
-		}
-		
 		Optional<Image> image = imageRepo.findById(imageId);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username=auth.getName();
 	    
-	    System.out.println(response.getBody());
+		if(image.isEmpty())
+		{
+			return null;
+		}
+	    
 		if(image.get().getUserId().equals(username))
 		{
 			return response.getBody().getObject().getJSONObject("data").getString("link");
@@ -99,16 +98,15 @@ public class imageServiceImplementation implements imageService {
 		  .multiPartContent()
 		  .asJson();
 		
-		if(response == null)
-		{
-			return null;
-		}
-		
 		Optional<Image> image = imageRepo.findById(imageId);
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username=auth.getName();
-	    System.out.println(response.getBody());
+	    
+		if(image.isEmpty()) {
+			return null;
+		}
+		
 		if(image.get().getUserId().equals(username))
 		{
 			return "deleted";
