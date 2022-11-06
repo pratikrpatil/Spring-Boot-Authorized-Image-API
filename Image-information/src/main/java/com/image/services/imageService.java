@@ -6,10 +6,10 @@ import kong.unirest.JsonNode;
 
 public interface imageService {
 	
-	JsonNode uploadImage(MultipartFile file);
+	String uploadImage(MultipartFile file);
 	
-	JsonNode viewImage(String imageId);
+	String viewImage(String imageId);
 	
-	JsonNode deleteImage(String imageId);
+	String deleteImage(String imageId);
 
 }

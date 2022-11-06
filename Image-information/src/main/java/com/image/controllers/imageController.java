@@ -25,26 +25,26 @@ public class imageController {
 	@GetMapping("/view")
 	public ResponseEntity<?> viewImage(@RequestParam("imageId") String imageId)
 	{
-		JsonNode response = imageService.viewImage(imageId);
+		String response = imageService.viewImage(imageId);
 		
 		if(response == null)
 		{
 			new ResponseEntity<>("NOT FOUND", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		return new ResponseEntity<>("Image-link : "+response, HttpStatus.OK);
 	}
 	
 	@PostMapping("/upload")
 	public ResponseEntity<?> uploadNewImage(@RequestParam("image") MultipartFile image)
 	{
-		JsonNode uploadImage = imageService.uploadImage(image);
+		String uploadImage = imageService.uploadImage(image);
 		return new ResponseEntity<>(uploadImage, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteImage(@RequestParam("imageId") String imageId)
 	{
-		JsonNode response = imageService.deleteImage(imageId);
+		String response = imageService.deleteImage(imageId);
 		
 		if(response == null)
 		{

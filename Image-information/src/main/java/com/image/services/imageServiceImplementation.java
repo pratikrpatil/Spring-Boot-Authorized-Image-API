@@ -30,7 +30,7 @@ public class imageServiceImplementation implements imageService {
 	private UserRepository userRepo;
 
 	@Override
-	public JsonNode uploadImage(MultipartFile file) {
+	public String uploadImage(MultipartFile file) {
 		
 		String encodeBase64String=null;
 		HttpResponse<JsonNode> asJson=null;
@@ -60,13 +60,13 @@ public class imageServiceImplementation implements imageService {
 		image.setUserId(username);
 		
 		imageRepo.save(image);
-		
-		return asJson.getBody();
+		System.out.println(asJson.getBody());
+		return "uploaded";
 		
 	}
 
 	@Override
-	public JsonNode viewImage(String imageId) {
+	public String viewImage(String imageId) {
 		
 		HttpResponse<JsonNode> response = Unirest.get("https://api.imgur.com/3/image/"+imageId)
 									.header("Authorization", "Bearer b736efc8d81f8e284fbc2530a35c9ba3d95bd2e2")
@@ -82,16 +82,17 @@ public class imageServiceImplementation implements imageService {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username=auth.getName();
 	    
+	    System.out.println(response.getBody());
 		if(image.get().getUserId().equals(username))
 		{
-			return response.getBody();
+			return response.getBody().getObject().getJSONObject("data").getString("link");
 		}
 			
 		return null;
 	}
 
 	@Override
-	public JsonNode deleteImage(String imageId) {
+	public String deleteImage(String imageId) {
 		
 		HttpResponse<JsonNode> response = Unirest.delete("https://api.imgur.com/3/image/"+imageId)
 		  .header("Authorization", "Bearer b736efc8d81f8e284fbc2530a35c9ba3d95bd2e2")
@@ -107,10 +108,10 @@ public class imageServiceImplementation implements imageService {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String username=auth.getName();
-	    
+	    System.out.println(response.getBody());
 		if(image.get().getUserId().equals(username))
 		{
-			return response.getBody();
+			return "deleted";
 		}
 		
 		return null;
