@@ -32,7 +32,11 @@ public class User {
 	private String email;
 	private String phone;
 	private String userName;
+	
+	@JsonIgnore
 	private String password;
+	
+	@JsonIgnore
 	private String authority;
 	
 	@OneToMany(mappedBy = "userId")
